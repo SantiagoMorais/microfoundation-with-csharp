@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/microfundamento-8-desenvolvimento-web-back-end.props" />
+</Project>
