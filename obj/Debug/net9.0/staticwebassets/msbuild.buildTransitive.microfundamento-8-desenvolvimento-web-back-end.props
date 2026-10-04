@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/microfundamento-8-desenvolvimento-web-back-end.props" />
-</Project>
