@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("microfundamento-8-desenvolvimento-web-back-end")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad3000427bf9ba4974afdc22e242bcaa85d3b50d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8fede4b7c617c334b7bb157c4f5a35aecb220e07")]
 [assembly: System.Reflection.AssemblyProductAttribute("microfundamento-8-desenvolvimento-web-back-end")]
 [assembly: System.Reflection.AssemblyTitleAttribute("microfundamento-8-desenvolvimento-web-back-end")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
