@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace microfundamento_8_desenvolvimento_web_back_end
+namespace microfundamento_8_desenvolvimento_web_back_end.Models
 {
     [Table("Vehicles")]
     public class Vehicle
@@ -15,9 +15,11 @@ namespace microfundamento_8_desenvolvimento_web_back_end
         [Required(ErrorMessage = "The plate is required")]
         public string Plate { get; set; }
 
+        [Display(Name = "Fabrication Year")]
         [Required(ErrorMessage = "The fabrication year is required")]
         public int FabricationYear { get; set; }
 
+        [Display(Name = "Model Year")]
         [Required(ErrorMessage = "The model year is required")]
         public int ModelYear { get; set; }
 
