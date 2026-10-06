@@ -10,5 +10,6 @@ namespace microfundamento_8_desenvolvimento_web_back_end
         }
 
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Consume> Consumes { get; set; }
     }
 }
