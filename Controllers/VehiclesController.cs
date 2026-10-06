@@ -36,26 +36,17 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             Vehicle vehicle = await _context.Vehicles.FindAsync(id);
-            if (vehicle == null)
-            {
-                return NotFound();
-            }
+            if (vehicle == null) return NotFound();
             // I'm returning the data to the form on view
             return View(vehicle);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Vehicle vehicle)
         {
-            if (id != vehicle.Id)
-            {
-                return NotFound();
-            }
+            if (id != vehicle.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -65,6 +56,32 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             }
 
             return View(vehicle);
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null) return NotFound();
+            return View(vehicle);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null) return NotFound();
+            return View(vehicle);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null) return NotFound();
+            _context.Vehicles.Remove(vehicle);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
