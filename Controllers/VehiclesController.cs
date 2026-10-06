@@ -33,5 +33,38 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+            // I'm returning the data to the form on view
+            return View(vehicle);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, Vehicle vehicle)
+        {
+            if (id != vehicle.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Vehicles.Update(vehicle);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(vehicle);
+        }
     }
 }
