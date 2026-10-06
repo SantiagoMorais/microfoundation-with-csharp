@@ -17,5 +17,21 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             List<Vehicle> vehicles = await _context.Vehicles.ToListAsync();
             return View(vehicles);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Vehicle vehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Vehicles.Add(vehicle);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
