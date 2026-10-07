@@ -20,6 +20,11 @@ Build succeeded.
 Done. To undo this action, use 'ef migrations remove'
 ```
 
+4. Apply the migration to the database by running the following command:
+```bash
+dotnet ef database update
+```
+
 ## EF syntax:
 
 1. Key: defines a primary key for the entity.

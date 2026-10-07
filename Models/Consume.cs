@@ -13,6 +13,8 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
+        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Value is required")]
