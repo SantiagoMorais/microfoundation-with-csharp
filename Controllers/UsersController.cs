@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using microfundamento_8_desenvolvimento_web_back_end.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -109,11 +110,18 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction(nameof(Login));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password)
         {
             User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
-            if (user != null && isPasswordValid)
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 var claims = new List<Claim>
                 {
@@ -122,22 +130,20 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
                     new Claim(ClaimTypes.Role, user.Profile.ToString()),
                 };
 
-                var userIdentity = new ClaimsIdentity(claims, "login");
+                var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 var props = new AuthenticationProperties
                 {
                     AllowRefresh = true,
                     IsPersistent = true,
-                    ExpiresUtc = DateTime.UtcNow.ToLocalTime().AddHours(8)
+                    ExpiresUtc = DateTime.UtcNow.AddHours(8)
                 };
 
-                await HttpContext.SignInAsync(principal, props);
-                return Redirect("/");
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
+                return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                ViewBag.ErrorMessage = "Email or password is incorrect.";
-            }
+
+            ViewBag.ErrorMessage = "Email or password is incorrect.";
             return View();
         }
     }
