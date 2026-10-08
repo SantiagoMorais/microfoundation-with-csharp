@@ -8,7 +8,7 @@
 public DbSet<Vehicle> Vehicles { get; set; }
 public DbSet<Consume> Consumes { get; set; }
 ```
-3. Run the following command in the terminal to create a migration:
+    3. Run the following command in the terminal to create a migration:
 ```bash
 dotnet ef migrations add <MigrationName>
 ```
