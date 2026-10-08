@@ -58,3 +58,5 @@ Access [NuGet](https://www.nuget.org/) to install the following packages:
     Function: Provides the core Entity Framework functionality for working with data models.
 - Microsoft.EntityFrameworkCore.SqlServer
     Function: Provides the SQL Server provider for Entity Framework.
+- BCrypt.Net-Next
+    Function: Provides a library for hashing and verifying passwords using the bcrypt algorithm.

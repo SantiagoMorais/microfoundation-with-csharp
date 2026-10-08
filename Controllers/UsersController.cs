@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using microfundamento_8_desenvolvimento_web_back_end.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +36,7 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -57,6 +60,7 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             if (id != user.Id) return NotFound();
             if (ModelState.IsValid)
             {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -91,6 +95,50 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            if (user != null && isPasswordValid)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Profile.ToString()),
+                };
+
+                var userIdentity = new ClaimsIdentity(claims, "login");
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                var props = new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.ToLocalTime().AddHours(8)
+                };
+
+                await HttpContext.SignInAsync(principal, props);
+                return Redirect("/");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Email or password is incorrect.";
+            }
+            return View();
         }
     }
 }
