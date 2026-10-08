@@ -50,3 +50,11 @@ public Vehicle Vehicle { get; set; }
 [Display(Name = "Model Year")]
 public int ModelYear { get; set; }
 ```
+
+## Installing Packages:
+
+Access [NuGet](https://www.nuget.org/) to install the following packages:
+- Microsoft.EntityFrameworkCore
+    Function: Provides the core Entity Framework functionality for working with data models.
+- Microsoft.EntityFrameworkCore.SqlServer
+    Function: Provides the SQL Server provider for Entity Framework.
