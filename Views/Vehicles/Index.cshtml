@@ -37,7 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                <a asp-action="Report" asp-route-id="@item.Id" class="btn btn-link">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </a>
             </td>
             <td>    
                 @Html.DisplayFor(modelItem => item.Plate)

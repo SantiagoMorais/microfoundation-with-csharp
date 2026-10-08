@@ -83,5 +83,20 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Report(int? id)
+        {
+            if (id == null) return NotFound();
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null) return NotFound();
+            List<Consume> consumes = await _context.Consumes.Where(c => c.VehicleId == id).OrderByDescending(c => c.Date).ToListAsync();
+
+            float total = consumes.Sum(c => c.Value);
+
+            ViewBag.Vehicle = vehicle;
+            ViewBag.Total = total;
+
+            return View(consumes);
+        }
     }
 }

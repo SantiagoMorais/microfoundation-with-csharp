@@ -1,0 +1,53 @@
+@model IEnumerable<microfundamento_8_desenvolvimento_web_back_end.Models.Consume>
+
+@{
+    var vehicle = ViewBag.Vehicle as microfundamento_8_desenvolvimento_web_back_end.Models.Vehicle;
+    var total = ViewBag.Total is null ? 0f : (float)ViewBag.Total;
+    ViewData["Title"] = "Report";
+}
+
+<h1>Vehicle Consumption Report</h1>
+
+@if (vehicle != null)
+{
+    <h4>@vehicle.Name - @vehicle.Plate</h4>
+}
+
+<p>
+    <strong>Total spent:</strong> @total.ToString("F2")
+</p>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Date)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Value)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Milage)</th>
+                <th>@Html.DisplayNameFor(model => model.First().FuelType)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Value)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Milage)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FuelType)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No fuel consumption records were found for this vehicle.</p>
+}
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
