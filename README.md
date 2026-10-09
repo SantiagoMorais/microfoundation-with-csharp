@@ -56,7 +56,29 @@ public int ModelYear { get; set; }
 Access [NuGet](https://www.nuget.org/) to install the following packages:
 - Microsoft.EntityFrameworkCore
     Function: Provides the core Entity Framework functionality for working with data models.
+```bash
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.0
+```
 - Microsoft.EntityFrameworkCore.SqlServer
     Function: Provides the SQL Server provider for Entity Framework.
+```bash
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.0.0
+```
 - BCrypt.Net-Next
     Function: Provides a library for hashing and verifying passwords using the bcrypt algorithm.
+```bash
+dotnet add package BCrypt.Net-Next --version 4.0.2
+```
+- Npgsql.EntityFrameworkCore.PostgreSQL
+    Function: Provides the PostgreSQL provider for Entity Framework.
+```bash
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 9.0.0
+```
+
+Installing all at once:
+```bash
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.0
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.0.0
+dotnet add package BCrypt.Net-Next --version 4.0.2
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 9.0.0
+```
