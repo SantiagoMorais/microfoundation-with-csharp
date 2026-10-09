@@ -2,11 +2,13 @@ using System.Security.Claims;
 using microfundamento_8_desenvolvimento_web_back_end.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly AppDbContext _context;
@@ -98,10 +100,7 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+        [AllowAnonymous]
 
         public IActionResult AccessDenied()
         {
@@ -110,14 +109,22 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction(nameof(Login));
         }
 
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string email, string password)
         {
             User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);

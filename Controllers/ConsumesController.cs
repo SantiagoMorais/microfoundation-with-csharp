@@ -1,10 +1,12 @@
 using microfundamento_8_desenvolvimento_web_back_end.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
 {
+    [Authorize]
     public class ConsumesController : Controller
     {
         private readonly AppDbContext _context;
