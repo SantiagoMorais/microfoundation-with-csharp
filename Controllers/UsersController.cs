@@ -155,10 +155,10 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
                 };
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Vehicles");
             }
 
-            ViewBag.ErrorMessage = "Email or password is incorrect.";
+            ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
             return View();
         }
     }
