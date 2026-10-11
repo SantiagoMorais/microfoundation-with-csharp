@@ -28,21 +28,29 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             return View(users);
         }
 
+        [AllowAnonymous]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
+            var isAdmin = User.IsInRole("Admin");
+            if (!isAdmin)
+            {
+                user.Profile = Profile.User;
+            }
+
             if (ModelState.IsValid)
             {
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return isAdmin ? RedirectToAction("Index") : RedirectToAction("Login");
             }
             return View(user);
         }
