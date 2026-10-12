@@ -42,7 +42,7 @@ namespace microfundamento_8_desenvolvimento_web_back_end.Controllers
             var isAdmin = User.IsInRole("Admin");
             if (!isAdmin)
             {
-                user.Profile = Profile.User;
+                user.Profile = await _context.Users.AnyAsync() ? Profile.User : Profile.Admin;
             }
 
             if (ModelState.IsValid)

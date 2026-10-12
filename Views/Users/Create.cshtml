@@ -34,10 +34,6 @@
                     <span asp-validation-for="Profile" class="text-danger"></span>
                 </div>
             }
-            else
-            {
-                <input type="hidden" asp-for="Profile" value="@Profile.User" />
-            }
             <button type="submit" class="btn btn-primary">Create</button>
             @if (User.IsInRole("Admin"))
             {
